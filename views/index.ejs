@@ -4,16 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Page</title>
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
     <h1>Our Products</h1>
+    <nav>
+        <a href="/api/products">Home</a>
+        <% products.forEach(function(category) { %>
+            <a href="/api/products/<%= category.category.toLowerCase().replace(/\s+/g, '-') %>" class="nav-links"><%= category.category %></a>
+        <% }) %>
+    </nav>
     <div class="product-container">
-        <!-- yttre iterationen -->
+        <!-- Outer iteration over categories -->
         <% products.forEach(function(category) { %>
             <h2><%= category.category %></h2>
-            <!-- inre interationen -->
+            <!-- Inner iteration over items within each category -->
             <% category.items.forEach(function(product) { %>
-                <a href="/api/products/<%= product.productTitle.toLowerCase().replace(/\s+/g, '-') %>" class="cardLink">
+                <a href="/api/products/<%= category.id %>/<%= product.id %>" class="cardLink">
                     <div class="productCard">
                         <div class="placeholderForImage">
                             <img src="<%= product.image %>" alt="<%= product.productTitle %>">

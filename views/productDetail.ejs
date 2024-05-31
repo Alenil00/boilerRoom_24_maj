@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= item.productTitle %> Products</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <nav>
+        <a href="/api/products">Home</a>
+        <% allCategories.forEach(function(cat) { %>
+            <a href="/api/products/<%= cat.category.toLowerCase().replace(/\s+/g, '-') %>" class="nav-links"><%= cat.category %></a>
+        <% }) %>
+    </nav>
+    
+    <h1><%= item.productTitle %></h1>
+    <div class="product-container">
+        <div class="productCard">
+            <div class="placeholderForImage">
+                <img src="<%= item.image %>" alt="<%= item.productTitle %>">
+            </div>
+            <div class="containerTitles">
+                <div class="title">
+                    <%= item.productTitle %>
+                </div>
+                <p> <%= item.description %> </p>
+                <p> <%= item.size %> </p>
+                <div class="subTitle">
+                    $<%= item.price %>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

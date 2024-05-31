@@ -1,57 +1,61 @@
-
-
 let products = [
     {
         id: 1,
-        category: "T-shirts",
+        category: "Tshirts",
         items: [
             {
-                id: 1,
+                id: 101,
                 price: 3.99,
-                size: "",
-                image: "tshirt1.jpg",
-                productTitle: "Basic T-shirt"
+                size: "S, M, L",
+                image: "/images/tshirt1.jpg",
+                productTitle: "Basic T-shirt",
+                description: "A classic basic t-shirt made from 100% cotton.",
             },
             {
-                id: 2,
+                id: 102,
                 price: 3.99,
-                size: "",
-                image: "tshirt2.jpg",
-                productTitle: "Graphic T-shirt"
+                size: "S, M, L",
+                image: "/images/tshirt2.jpg",
+                productTitle: "Graphic T-shirt",
+                description: "A trendy graphic t-shirt featuring a unique design.",
             },
             {
-                id: 3,
+                id: 103,
                 price: 3.99,
-                size: "",
-                image: "tshirt3.jpg",
-                productTitle: "V-neck T-shirt"
+                size: "S, M, L",
+                image: "/images/tshirt3.jpg",
+                productTitle: "V-neck T-shirt",
+                description: "A stylish v-neck t-shirt made from soft and breathable fabric.",
             }
         ]
     },
     {
         id: 2,
-        category: "Tröjor",
+        category: "Tops",
         items: [
             {
-                id: 1,
+                id: 201,
                 price: 3.99,
-                size: "",
-                image: "troja1.jpg",
-                productTitle: "Knitted Sweater"
+                size: "S, M, L",
+                image: "/images/troja1.jpg",
+                productTitle: "Knitted Sweater",
+                description: "A cozy knitted sweater perfect for chilly days.",
             },
             {
-                id: 2,
+                id: 202,
                 price: 3.99,
-                size: "",
-                image: "troja2.jpg",
-                productTitle: "Hooded Sweatshirt"
+                size: "S, M, L",
+                image: "/images/troja2.jpg",
+                productTitle: "Hooded Sweatshirt",
+                description: "A comfortable hooded sweatshirt with a front pocket.",
             },
             {
-                id: 3,
+                id: 203,
                 price: 3.99,
-                size: "",
-                image: "troja3.jpg",
-                productTitle: "Crew Neck Sweater"
+                size: "S, M, L",
+                image: "/images/troja3.jpg",
+                productTitle: "Crew Neck Sweater",
+                description: "A classic crew neck sweater made from high-quality materials.",
             }
         ]
     },
@@ -60,25 +64,28 @@ let products = [
         category: "Strumpor",
         items: [
             {
-                id: 1,
+                id: 301,
                 price: 3.99,
-                size: "",
-                image: "sock1.jpg",
-                productTitle: "Ankle Socks"
+                size: "One Size",
+                image: "/images/sock1.jpg",
+                productTitle: "Ankle Socks",
+                description: "A set of comfortable ankle socks suitable for everyday wear.",
             },
             {
-                id: 2,
+                id: 302,
                 price: 3.99,
-                size: "",
-                image: "sock2.jpg",
-                productTitle: "Crew Socks"
+                size: "One Size",
+                image: "/images/sock2.jpg",
+                productTitle: "Crew Socks",
+                description: "A pack of crew socks made from breathable cotton material.",
             },
             {
-                id: 3,
+                id: 303,
                 price: 3.99,
-                size: "",
-                image: "sock3.jpg",
-                productTitle: "Knee-high Socks"
+                size: "One Size",
+                image: "/images/sock3.jpg",
+                productTitle: "Knee-high Socks",
+                description: "Stylish knee-high socks perfect for adding a touch of flair to your outfit.",
             }
         ]
     },
@@ -87,25 +94,28 @@ let products = [
         category: "Jackor",
         items: [
             {
-                id: 1,
+                id: 401,
                 price: 3.99,
-                size: "",
-                image: "jacket1.jpg",
-                productTitle: "Leather Jacket"
+                size: "S, M, L",
+                image: "/images/jacket1.jpg",
+                productTitle: "Leather Jacket",
+                description: "A classic leather jacket featuring a timeless design.",
             },
             {
-                id: 2,
+                id: 402,
                 price: 3.99,
-                size: "",
-                image: "jacket2.jpg",
-                productTitle: "Denim Jacket"
+                size: "S, M, L",
+                image: "/images/jacket2.jpg",
+                productTitle: "Denim Jacket",
+                description: "A trendy denim jacket perfect for casual outings.",
             },
             {
-                id: 3,
+                id: 403,
                 price: 3.99,
-                size: "",
-                image: "jacket3.jpg",
-                productTitle: "Bomber Jacket"
+                size: "S, M, L",
+                image: "/images/jacket3.jpg",
+                productTitle: "Bomber Jacket",
+                description: "A stylish bomber jacket with a comfortable fit.",
             }
         ]
     },
@@ -114,29 +124,31 @@ let products = [
         category: "Byxor",
         items: [
             {
-                id: 1,
+                id: 501,
                 price: 3.99,
-                size: "",
-                image: "pants1.jpg",
-                productTitle: "Jeans"
+                size: "S, M, L",
+                image: "/images/pants1.jpg",
+                productTitle: "Jeans",
+                description: "Classic denim jeans suitable for everyday wear.",
             },
             {
-                id: 2,
+                id: 502,
                 price: 3.99,
-                size: "",
-                image: "pants2.jpg",
-                productTitle: "Chinos"
+                size: "S, M, L",
+                image: "/images/pants2.jpg",
+                productTitle: "Chinos",
+                description: "Versatile chinos that can be dressed up or down for any occasion.",
             },
             {
-                id: 3,
+                id: 503,
                 price: 3.99,
-                size: "",
-                image: "pants3.jpg",
-                productTitle: "Sweatpants"
+                size: "S, M, L",
+                image: "/images/pants3.jpg",
+                productTitle: "Sweatpants",
+                description: "Comfortable sweatpants perfect for lounging or casual outings.",
             }
         ]
     }
 ];
 
 export default products;
-

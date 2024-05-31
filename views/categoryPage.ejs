@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= category %> Products</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <nav>
+        <a href="/api/products">Home</a>
+        <% allCategories.forEach(function(cat) { %>
+            <a href="/api/products/<%= cat.category.toLowerCase().replace(/\s+/g, '-') %>" class="nav-links"><%= cat.category %></a>
+        <% }) %>
+    </nav>
+    
+    <h1><%= category %></h1>
+    <div class="product-container">
+        <% items.forEach(function(product) { %>
+            <!-- VÅRA LÄNKAR HÄR FUNKAR EJ
+            LÖS DET SNÄLLA
+        SNÄLLA
+    SNÄLLA -->
+            <a href="/api/products/<%= category.id %>/<%= product.id %>" class="cardLink">
+
+                <div class="productCard">
+                    <div class="placeholderForImage">
+                        <img src="<%= product.image %>" alt="<%= product.productTitle %>">
+                    </div>
+                    <div class="containerTitles">
+                        <div class="title">
+                            <%= product.productTitle %>
+                        </div>s
+                        <div class="subTitle">
+                            $<%= product.price %>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        <% }) %>
+    </div>
+</body>
+</html>
