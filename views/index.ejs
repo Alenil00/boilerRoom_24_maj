@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+</head>
+<body>
+    <h1>Our Products</h1>
+    <div class="product-container">
+        <!-- yttre iterationen -->
+        <% products.forEach(function(category) { %>
+            <h2><%= category.category %></h2>
+            <!-- inre interationen -->
+            <% category.items.forEach(function(product) { %>
+                <a href="/api/products/<%= product.productTitle.toLowerCase().replace(/\s+/g, '-') %>" class="cardLink">
+                    <div class="productCard">
+                        <div class="placeholderForImage">
+                            <img src="<%= product.image %>" alt="<%= product.productTitle %>">
+                        </div>
+                        <div class="containerTitles">
+                            <div class="title">
+                                <%= product.productTitle %>
+                            </div>
+                            <div class="subTitle">
+                                <%= product.price ? '$' + product.price.toFixed(2) : 'Price Not Available' %> 
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            <% }) %>
+        <% }) %>
+    </div>
+</body>
+</html>
