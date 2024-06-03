@@ -39,228 +39,225 @@ app.get("/api/products/:category", (_request, _response) => {
 
 // GET PRODUCT DETAIL VIEW
 app.get("/api/products/:category/:id", (_request, _response) => {
-    // const categoryId = parseInt(_request.params.category); Changed this to handle category as a string and not as an ID
     const category = _request.params.category.replace(/-/g, ' ').toLowerCase();
     const itemId = parseInt(_request.params.id);
 
-    // Find the category based on the provided ID
-    // const specificCategory = products.find(category => category.id === categoryId); // Change from id to category lookup due to the above change
     const specificCategory = products.find(cat => cat.category.toLowerCase() === category);
 
     if (!specificCategory) {
-        // If the category is not found, return a 404 status and message
         return _response.status(404).send("Category not found");
     }
 
-    // Find the item within the category based on the provided ID
     const specificItem = specificCategory.items.find(item => item.id === itemId);
 
     if (!specificItem) {
-        // If the item is not found within the category, return a 404 status and message
         return _response.status(404).send("Item not found");
     }
 
-    // Render the productDetail view with the specific item and all categories
     _response.status(200).render("productDetail", { item: specificItem, allCategories: products });
 });
 
+// POST NEW ITEM
+app.post("/api/products/:category", (_request, _response) => {
+    let {
+        body,
+        params: { category },
+    } = _request;
 
+    let oCategory = products.find((product) => product.category.toLowerCase() === category.toLowerCase());
 
+    if (!oCategory) {
+        return _response.status(404).send("Category not found");
+    }
 
+    const newItem = {
+        id: oCategory.items.length ? oCategory.items[oCategory.items.length - 1].id + 1 : 1,
+        ...body
+    };
 
-// app.post("/api/:category", (_request, _response) => {
-//     let {
-//       body,
-//       params: { category },
-//     } = _request;
-  
-//     let oCategory = products.find((product) => product.category === category);
-  
-//     const newItem = {
-//       id: oCategory.item.length
-//         ? oCategory.item[oCategory.item.length - 1].id + 1
-//         : 1,
-//       ...body,
-//       price: _request.body.price,
-//       size: _request.body.size,
-//     };
-  
-//     oCategory.item.push(newItem);
-//     _response.status(201).json(newItem);
-  
-//     if (!category) {
-//       return _response.status(404).send("404: Gör om Gör rätt!");
-//     }
-//   });
-  
-//   app.patch("/api/:category/:itemId", (_request, _response) => {
-//     const {
-//       body,
-//       params: { category, itemId },
-//     } = _request;
-  
-//     let oCategory = products.find((product) => product.category === category);
-  
-//     if (!oCategory) {
-//       return _response.status(404).send("Category not found");
-//     }
-  
-//     let itemToUpdate = oCategory.item.find((item) => item.id == itemId);
-  
-//     if (!itemToUpdate) {
-//       return _response.status(404).send("Item not found");
-//     }
-  
-//     // Object.assign() is a method in JavaScript used for copying the values of all enumerable own properties from one or more source objects to a target object. It returns the target object.
-//     Object.assign(itemToUpdate, body);
-//     _response.status(200).json(itemToUpdate);
-//   });
-  
-//   app.delete("/api/:category/:itemId", (_request, _response) => {
-//     const {
-//       params: { category, itemId },
-//     } = _request;
-  
-//     // Find the category
-//     let oCategory = products.find((product) => product.category === category);
-  
-//     if (!oCategory) {
-//       return _response.status(404).send("Category not found");
-//     }
-  
-//     // Find the item within the category
-//     let index = oCategory.item.findIndex((item) => item.id == itemId);
-  
-//     if (index === -1) {
-//       return _response.status(404).send("Item not found");
-//     }
-  
-//     // Remove the item from the category's items array
-//     const deletedItem = oCategory.item.splice(index, 1)[0];
-  
-//     _response.status(200).json(deletedItem);
-//   });
-  
-//   // get endpoints
-//   app.get("/", (_request, _response) => {
-//     _response.status(200).send("Welcome to the start page... This is it!");
-//   });
-  
-//   app.get("/api/products", (_request, _response) => {
-//     _response.status(200).send(products);
-//   });
-  
+    oCategory.items.push(newItem);
+    _response.status(201).json(newItem);
+});
 
-// //GET USERS
-// app.get("/api/users", (_request, _response) => {
-//     _response.status(200).json(users);
-// })
+// PUT ITEM
+app.put("/api/products/:category/:itemId", (_request, _response) => {
+    const {
+        body,
+        params: { category, itemId },
+    } = _request;
 
-// app.get("/api/users/:id", (_request, _response) => {
-//     let id = parseInt(_request.params.id);
+    let oCategory = products.find((product) => product.category.toLowerCase() === category.toLowerCase());
 
-//     if(isNaN(id)) {
-//         return _response.status(400).send("400 error, bad request. invalid id");
-//     }
+    if (!oCategory) {
+        return _response.status(404).send("Category not found");
+    }
 
-//     let specUser = users.find((user) => {
-//         return user.id === id;
-//     })
+    let itemIndex = oCategory.items.findIndex((item) => item.id == itemId);
 
-//     if(!specUser) return _response.status(404).send(`404 page not found, no user with id ${id} found. `)
+    if (itemIndex === -1) {
+        return _response.status(404).send("Item not found");
+    }
 
-//     _response.status(200).json(specUser);
-// })
+    oCategory.items[itemIndex] = { id: parseInt(itemId), ...body };
+    _response.status(200).json(oCategory.items[itemIndex]);
+});
 
+// PATCH ITEM
+app.patch("/api/products/:category/:itemId", (_request, _response) => {
+    const {
+        body,
+        params: { category, itemId },
+    } = _request;
 
-// //POST USER
-// app.post("/api/users", (_request, _response) => {
-//     let {body} = _request;
+    let oCategory = products.find((product) => product.category.toLowerCase() === category.toLowerCase());
 
-//     let addNewUser = {
-//         id: users[users.length -1].id + 1, ...body
-//     }
+    if (!oCategory) {
+        return _response.status(404).send("Category not found");
+    }
 
-//     users.push(addNewUser);
+    let itemIndex = oCategory.items.findIndex((item) => item.id == itemId);
 
-//     _response.status(201).send(addNewUser);
-// })
+    if (itemIndex === -1) {
+        return _response.status(404).send("Item not found");
+    }
 
+    oCategory.items[itemIndex] = { ...oCategory.items[itemIndex], ...body };
+    _response.status(200).json(oCategory.items[itemIndex]);
+});
 
-// //PUT USER
-// app.put("/api/users/:id", (_request, _response) => {
-//     let {body, params: {id}} = _request;
+// DELETE ITEM
+app.delete("/api/products/:category/:itemId", (_request, _response) => {
+    const {
+        params: { category, itemId },
+    } = _request;
 
-//     let userId = parseInt(id);
+    let oCategory = products.find((product) => product.category.toLowerCase() === category.toLowerCase());
 
-//     if(isNaN(userId)) {
-//         return _response.status(400).send(`400 bad request, please enter a number`)
-//     }
+    if (!oCategory) {
+        return _response.status(404).send("Category not found");
+    }
 
-//     let userIndex = users.findIndex((user) => {
-//         return user.id === userId
-//     })
+    let itemIndex = oCategory.items.findIndex((item) => item.id == itemId);
 
-//     if (userIndex === -1) {
-//         return _response.status(404).send("404, user not found");
-//     }
+    if (itemIndex === -1) {
+        return _response.status(404).send("Item not found");
+    }
 
-//     users[userIndex] = {id: userId, ...body};
+    const deletedItem = oCategory.items.splice(itemIndex, 1)[0];
 
-//     _response.status(200).send(users[userIndex]);
-// })
+    _response.status(200).json(deletedItem);
+});
 
+// GET USERS
+app.get("/api/users", (_request, _response) => {
+    _response.status(200).json(users);
+});
 
+app.get("/api/users/:id", (_request, _response) => {
+    let id = parseInt(_request.params.id);
 
-// //PATCH USER
-// app.patch("/api/users/:id", (_request, _response) => {
-//     let {body, params: {id}} = _request;
+    if (isNaN(id)) {
+        return _response.status(400).send("400 error, bad request. invalid id");
+    }
 
-//     let userId = parseInt(id);
+    let specUser = users.find((user) => {
+        return user.id === id;
+    });
 
-//     if(isNaN(userId)) {
-//         return _response.status(400).send(`400 bad request, please enter a number`)
-//     }
+    if (!specUser) return _response.status(404).send(`404 page not found, no user with id ${id} found.`);
 
-//     let userIndex = users.findIndex((user) => {
-//         return user.id === userId
-//     })
+    _response.status(200).json(specUser);
+});
 
-//     if (userIndex === -1) {
-//         return _response.status(404).send("404, user not found");
-//     }
+// POST USER
+app.post("/api/users", (_request, _response) => {
+    let { body } = _request;
 
-//     users[userIndex] = {...users[userIndex], ...body};
+    let addNewUser = {
+        id: users[users.length - 1].id + 1, ...body
+    };
 
-//     _response.status(200).send(users[userIndex]);
-// })
+    users.push(addNewUser);
 
+    _response.status(201).send(addNewUser);
+});
 
-// //DELETE USER
-// app.delete("/api/users/:id", (_request, _response) => {
-//     let {params: { id } } = _request;
+// PUT USER
+app.put("/api/users/:id", (_request, _response) => {
+    let { body, params: { id } } = _request;
 
-//     let userId = parseInt(id);
+    let userId = parseInt(id);
 
-//     if (isNaN(userId)) {
-//         return _response.status(400).send("400 bad request, please enter a number"); // Bad Request
-//     }
+    if (isNaN(userId)) {
+        return _response.status(400).send(`400 bad request, please enter a number`);
+    }
 
-//     let userIndex = users.findIndex((user) => user.id === userId);
+    let userIndex = users.findIndex((user) => {
+        return user.id === userId;
+    });
 
+    if (userIndex === -1) {
+        return _response.status(404).send("404, user not found");
+    }
 
-//     if (userIndex === -1) {
-//         return _response.status(404).send("404, page not found, userId not found");
-//     }
+    users[userIndex] = { id: userId, ...body };
 
-//     //raderar fr.o.m. userIndex och raderar bara 1 (index, 1)
-//     users.splice(userIndex, 1);
+    _response.status(200).send(users[userIndex]);
+});
 
-//     _response.status(200).send(`user deleted successfully`);
-// })
+// PATCH USER
+app.patch("/api/users/:id", (_request, _response) => {
+    let { body, params: { id } } = _request;
 
+    let userId = parseInt(id);
 
+    if (isNaN(userId)) {
+        return _response.status(400).send(`400 bad request, please enter a number`);
+    }
+
+    let userIndex = users.findIndex((user) => {
+        return user.id === userId;
+    });
+
+    if (userIndex === -1) {
+        return _response.status(404).send("404, user not found");
+    }
+
+    users[userIndex] = { ...users[userIndex], ...body };
+
+    _response.status(200).send(users[userIndex]);
+});
+
+// DELETE USER
+app.delete("/api/users/:id", (_request, _response) => {
+    let { params: { id } } = _request;
+
+    let userId = parseInt(id);
+
+    if (isNaN(userId)) {
+        return _response.status(400).send("400 bad request, please enter a number");
+    }
+
+    let userIndex = users.findIndex((user) => user.id === userId);
+
+    if (userIndex === -1) {
+        return _response.status(404).send("404, page not found, userId not found");
+    }
+
+    users.splice(userIndex, 1);
+
+    _response.status(200).send(`user deleted successfully`);
+});
+
+// Default GET endpoint
+app.get("/", (_request, _response) => {
+    _response.status(200).send("Welcome to the start page... This is it!");
+});
+
+app.get("/api/products", (_request, _response) => {
+    _response.status(200).send(products);
+});
 
 app.listen(PORT, () => {
-    console.log(`Running on port ${PORT}`)
+    console.log(`Running on port ${PORT}`);
 });
