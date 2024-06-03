@@ -6,43 +6,46 @@ let app = oExpress();
 
 const PORT = 3008;
 
-//middleware för att reqest.body kan defineras
+// Middleware for parsing request body
 app.use(oExpress.json());
 
-//middleware för att läsa in ejs-filer (statiskt)
+// Middleware for serving EJS files (static)
 app.set("view engine", "ejs");
 
-//serve static files
+// Serve static files
 app.use(oExpress.static('public'));
 
-//GET STARTVY
-app.get("/api/products" , (_request, _response) => {
-    _response.status(200).render("index", {products : products})
-})
+// GET HOME VIEW
+app.get("/api/products", (_request, _response) => {
+    _response.status(200).render("index", { products: products });
+});
 
-// GET KATEGORI VY
+// GET CATEGORY VIEW
 app.get("/api/products/:category", (_request, _response) => {
-    const category = _request.params.category.replace(/-/g, ' ').toLowerCase();
-    const categoryProducts = products.find(product => product.category.toLowerCase() === category);
+    const category = _request.params.category;
+
+    const categoryProducts = products.find(product => product.category.toLowerCase() === category.toLowerCase());
 
     if (categoryProducts) {
-        _response.status(200).render("categoryPage", { 
-            category: categoryProducts.category, 
+        _response.status(200).render("categoryPage", {
+            category: categoryProducts.category,
             items: categoryProducts.items,
-            allCategories: products , // Pass all categories for navigation
+            allCategories: products, // Pass all categories for navigation
         });
     } else {
         _response.status(404).send("Category not found");
     }
 });
 
-// GET PRODUKTDETALJER VY
+// GET PRODUCT DETAIL VIEW
 app.get("/api/products/:category/:id", (_request, _response) => {
-    const categoryId = parseInt(_request.params.category);
+    // const categoryId = parseInt(_request.params.category); Changed this to handle category as a string and not as an ID
+    const category = _request.params.category.replace(/-/g, ' ').toLowerCase();
     const itemId = parseInt(_request.params.id);
 
     // Find the category based on the provided ID
-    const specificCategory = products.find(category => category.id === categoryId);
+    // const specificCategory = products.find(category => category.id === categoryId); // Change from id to category lookup due to the above change
+    const specificCategory = products.find(cat => cat.category.toLowerCase() === category);
 
     if (!specificCategory) {
         // If the category is not found, return a 404 status and message
@@ -60,6 +63,7 @@ app.get("/api/products/:category/:id", (_request, _response) => {
     // Render the productDetail view with the specific item and all categories
     _response.status(200).render("productDetail", { item: specificItem, allCategories: products });
 });
+
 
 
 

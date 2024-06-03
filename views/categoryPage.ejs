@@ -17,12 +17,7 @@
     <h1><%= category %></h1>
     <div class="product-container">
         <% items.forEach(function(product) { %>
-            <!-- VÅRA LÄNKAR HÄR FUNKAR EJ
-            LÖS DET SNÄLLA
-        SNÄLLA
-    SNÄLLA -->
-            <a href="/api/products/<%= category.id %>/<%= product.id %>" class="cardLink">
-
+            <a href="/api/products/<%= category.toLowerCase().replace(/\s+/g, '-') %>/<%= product.id %>" class="cardLink">
                 <div class="productCard">
                     <div class="placeholderForImage">
                         <img src="<%= product.image %>" alt="<%= product.productTitle %>">
@@ -30,7 +25,7 @@
                     <div class="containerTitles">
                         <div class="title">
                             <%= product.productTitle %>
-                        </div>s
+                        </div>
                         <div class="subTitle">
                             $<%= product.price %>
                         </div>

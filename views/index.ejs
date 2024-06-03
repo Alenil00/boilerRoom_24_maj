@@ -20,7 +20,8 @@
             <h2><%= category.category %></h2>
             <!-- Inner iteration over items within each category -->
             <% category.items.forEach(function(product) { %>
-                <a href="/api/products/<%= category.id %>/<%= product.id %>" class="cardLink">
+                <!-- <a href="/api/products/<%= category.id %>/<%= product.id %>" class="cardLink"> // Ändrade denna för att använda category name istället för id, då blev URLen korrekt-->
+                <a href="/api/products/<%= category.category.toLowerCase().replace(/\s+/g, '-') %>/<%= product.id %>" class="cardLink">
                     <div class="productCard">
                         <div class="placeholderForImage">
                             <img src="<%= product.image %>" alt="<%= product.productTitle %>">
